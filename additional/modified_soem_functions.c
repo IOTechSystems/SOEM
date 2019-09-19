@@ -49,6 +49,6 @@ int eeprom_read(int slave, int start, int length, uint8_t *ebuf)
        }
        return 0;
    }
-   /Failed/
+   // Failed
    return 1;
 }
