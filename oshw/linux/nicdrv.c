@@ -97,6 +97,8 @@ int ecx_setupnic(ecx_portt *port, const char *ifname, int secondary)
    int *psock;
    pthread_mutexattr_t mutexattr;
 
+   memset(&sll, 0, sizeof(struct sockaddr_ll));
+
    rval = 0;
    if (secondary)
    {
