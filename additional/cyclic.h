@@ -1,7 +1,3 @@
-//
-// Created by root on 21/10/19.
-//
-
 // (c)Arthur Ketels 2008
 
 #ifndef C_CYCLIC_H
