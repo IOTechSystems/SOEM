@@ -3,7 +3,7 @@
 
 #include "cyclic.h"
 
-void ec_sync(int64 reftime, int64 cycletime , int64 *offsettime)
+static void ec_sync(int64 reftime, int64 cycletime , int64 *offsettime)
 {
   static int64 integral = 0;
   int64 delta;
@@ -17,7 +17,7 @@ void ec_sync(int64 reftime, int64 cycletime , int64 *offsettime)
 
 
 
-void add_timespec(struct timespec *ts, int64 addtime)
+static void add_timespec(struct timespec *ts, int64 addtime)
 {
   int64 sec, nsec;
 
