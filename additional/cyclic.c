@@ -3,6 +3,10 @@
 
 #include "cyclic.h"
 
+struct timespec   ts, tleft;
+int ht;
+int64 toff;
+
 static void ec_sync(int64 reftime, int64 cycletime , int64 *offsettime)
 {
   static int64 integral = 0;
@@ -17,41 +21,48 @@ static void ec_sync(int64 reftime, int64 cycletime , int64 *offsettime)
 
 
 
-static void add_timespec(struct timespec *ts, int64 addtime)
+static void add_timespec(struct timespec *ts_, int64 addtime)
 {
   int64 sec, nsec;
 
   nsec = addtime % NSEC_PER_SEC;
   sec = (addtime - nsec) / NSEC_PER_SEC;
-  ts->tv_sec += sec;
-  ts->tv_nsec += nsec;
-  if ( ts->tv_nsec > NSEC_PER_SEC )
+  ts_->tv_sec += sec;
+  ts_->tv_nsec += nsec;
+  if ( ts_->tv_nsec > NSEC_PER_SEC )
   {
-    nsec = ts->tv_nsec % NSEC_PER_SEC;
-    ts->tv_sec += (ts->tv_nsec - nsec) / NSEC_PER_SEC;
-    ts->tv_nsec = nsec;
+    nsec = ts_->tv_nsec % NSEC_PER_SEC;
+    ts_->tv_sec += (ts_->tv_nsec - nsec) / NSEC_PER_SEC;
+    ts_->tv_nsec = nsec;
   }
 }
 
-void initialise_cyclic_variables(){
+int64_t initialise_cyclic_variables(int cycletime_us){
 
   clock_gettime(CLOCK_MONOTONIC, &ts);
   ht = (ts.tv_nsec / 1000000) + 1;
   ts.tv_nsec = ht * 1000000;
-  cycletime_ns = *(int*)&cycletime_us * 1000;
+  int64_t cycletime_ns = *(int*)&cycletime_us * 1000;
   toff = 0;
+  return cycletime_ns;
 }
 
-void sleep_cycle(){
+void sleep_cycle_with_offset(int64_t cycletime){
 
-  add_timespec(&ts, cycletime_ns + toff);
+  add_timespec(&ts, cycletime + toff);
   clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &ts, &tleft);
 }
 
-void calc_offset(){
+void sleep_cycle(int64_t sleep){
+
+  add_timespec(&ts, sleep);
+  clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &ts, &tleft);
+}
+
+void calc_offset(int64_t cycletime){
 
   if (ec_slave[0].hasdc)
   {
-    ec_sync(ec_DCtime, cycletime_ns, &toff);
+    ec_sync(ec_DCtime, cycletime, &toff);
   }
 }
