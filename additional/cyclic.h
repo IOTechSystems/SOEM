@@ -22,8 +22,6 @@ struct timespec   ts, tleft;
 int ht, cycletime_us;
 int64 cycletime_ns, toff, gl_delta;
 
-void ec_sync(int64 reftime, int64 cycletime, int64 *offsettime);
-void add_timespec(struct timespec *ts, int64 addtime);
 void initialise_cyclic_variables();
 void sleep_cycle();
 void calc_offset();
