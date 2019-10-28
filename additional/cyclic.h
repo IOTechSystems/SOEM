@@ -4,6 +4,7 @@
 #define C_CYCLIC_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -21,7 +22,7 @@
 
 int64 gl_delta;
 
-int64_t initialise_cyclic_variables(int cycletime_us);
+void initialise_cyclic_variables();
 void sleep_cycle_with_offset(int64_t cycletime);
 void sleep_cycle(int64_t sleep);
 void calc_offset(int64_t cycletime);

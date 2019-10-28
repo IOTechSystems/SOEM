@@ -37,14 +37,12 @@ static void add_timespec(struct timespec *ts_, int64 addtime)
   }
 }
 
-int64_t initialise_cyclic_variables(int cycletime_us){
+void initialise_cyclic_variables(){
 
   clock_gettime(CLOCK_MONOTONIC, &ts);
   ht = (ts.tv_nsec / 1000000) + 1;
   ts.tv_nsec = ht * 1000000;
-  int64_t cycletime_ns = *(int*)&cycletime_us * 1000;
   toff = 0;
-  return cycletime_ns;
 }
 
 void sleep_cycle_with_offset(int64_t cycletime){
