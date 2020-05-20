@@ -77,7 +77,7 @@ int ec_readOE(uint16 Item, ec_ODlistt *pODlist, ec_OElistt *pOElist);
 int ec_readPDOassign(uint16 Slave, uint16 PDOassign);
 int ecx_readPDOassign(ecx_contextt *context, uint16 Slave, uint16 PDOassign);
 int ec_readPDOassignCA(uint16 Slave, uint16 PDOassign, int Thread_n);
-int ecx_readPDOassignCA(ecx_contextt *context, uint16 Slave, int Thread_n);
+int ecx_readPDOassignCA(ecx_contextt *context, uint16 Slave, int Thread_n, uint16 PDOassign);
 #endif
 
 #endif
