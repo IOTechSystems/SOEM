@@ -17,7 +17,11 @@ extern "C"
 #endif
 
 #ifdef EC_VER1
+#ifdef DECLARATION_CHANGES
 boolean ec_configdc(void);
+#else
+boolean ec_configdc();
+#endif
 void ec_dcsync0(uint16 slave, boolean act, uint32 CyclTime, int32 CyclShift);
 void ec_dcsync01(uint16 slave, boolean act, uint32 CyclTime0, uint32 CyclTime1, int32 CyclShift);
 #endif

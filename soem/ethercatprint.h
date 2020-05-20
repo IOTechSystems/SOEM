@@ -16,7 +16,11 @@ extern "C"
 {
 #endif
 
+#ifdef DECLARATION_CHANGES
 const char* ec_sdoerror2string( uint32 sdoerrorcode);
+#else
+char* ec_sdoerror2string( uint32 sdoerrorcode);
+#endif
 char* ec_ALstatuscode2string( uint16 ALstatuscode);
 char* ec_soeerror2string( uint16 errorcode);
 char* ec_mbxerror2string( uint16 errorcode);

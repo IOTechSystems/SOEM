@@ -19,8 +19,6 @@ static void ec_sync(int64 reftime, int64 cycletime , int64 *offsettime)
   gl_delta = delta;
 }
 
-
-
 static void add_timespec(struct timespec *ts_, int64 addtime)
 {
   int64 sec, nsec;
