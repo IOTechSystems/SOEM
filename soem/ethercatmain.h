@@ -524,6 +524,14 @@ int ecx_send_overlap_processdata(ecx_contextt *context);
 int ecx_receive_processdata(ecx_contextt *context, int timeout);
 int ecx_send_processdata_group(ecx_contextt *context, uint8 group);
 
+/////////
+int ecx_FPRD_multi(ecx_contextt *context, int n, uint16 *configlst, ec_alstatust *slstatlst, int timeout);
+uint16 ecx_eeprom_waitnotbusyAP(ecx_contextt *context, uint16 aiadr,uint16 *estat, int timeout);
+uint16 ecx_eeprom_waitnotbusyFP(ecx_contextt *context, uint16 configadr,uint16 *estat, int timeout);
+uint16 ec_eeprom_waitnotbusyAP(uint16 aiadr,uint16 *estat, int timeout);
+uint16 ec_eeprom_waitnotbusyFP(uint16 configadr,uint16 *estat, int timeout);
+///////
+
 #ifdef __cplusplus
 }
 #endif

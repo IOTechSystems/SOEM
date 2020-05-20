@@ -188,13 +188,16 @@ int ecx_setupnic(ecx_portt *port, const char *ifname, int secondary)
 int ecx_closenic(ecx_portt *port)
 {
    if (port->sockhandle >= 0)
-      pthread_mutex_destroy(&(port->getindex_mutex));
-      pthread_mutex_destroy(&(port->tx_mutex));
-      pthread_mutex_destroy(&(port->rx_mutex));
-      close(port->sockhandle);
+   {
+     pthread_mutex_destroy(&(port->getindex_mutex));
+     pthread_mutex_destroy(&(port->tx_mutex));
+     pthread_mutex_destroy(&(port->rx_mutex));
+     close(port->sockhandle);
+   }
    if ((port->redport) && (port->redport->sockhandle >= 0))
-      close(port->redport->sockhandle);
-
+   {
+     close(port->redport->sockhandle);
+   }
    return 0;
 }
 
@@ -648,3 +651,4 @@ int ec_srconfirm(int idx, int timeout)
    return ecx_srconfirm(&ecx_port, idx, timeout);
 }
 #endif
+

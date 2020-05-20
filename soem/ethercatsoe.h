@@ -123,6 +123,9 @@ int ecx_SoEread(ecx_contextt *context, uint16 slave, uint8 driveNo, uint8 elemen
 int ecx_SoEwrite(ecx_contextt *context, uint16 slave, uint8 driveNo, uint8 elementflags, uint16 idn, int psize, void *p, int timeout);
 int ecx_readIDNmap(ecx_contextt *context, uint16 slave, int *Osize, int *Isize);
 
+//////////
+void ecx_SoEerror(ecx_contextt *context, uint16 Slave, uint16 idn, uint16 Error);
+/////////
 #ifdef __cplusplus
 }
 #endif

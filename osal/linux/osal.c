@@ -12,6 +12,8 @@
 
 #define USECS_PER_SEC     1000000
 
+static int osal_gettimeofday(struct timeval *tv, struct timezone *tz);
+
 int osal_usleep (uint32 usec)
 {
    struct timespec ts;
@@ -21,7 +23,7 @@ int osal_usleep (uint32 usec)
    return nanosleep(&ts, NULL);
 }
 
-int osal_gettimeofday(struct timeval *tv, struct timezone *tz)
+static int osal_gettimeofday(struct timeval *tv, struct timezone *tz)
 {
    struct timespec ts;
    int return_value;
@@ -88,7 +90,7 @@ boolean osal_timer_is_expired (osal_timert * self)
 
    return is_not_yet_expired == FALSE;
 }
-
+#if 0
 void *osal_malloc(size_t size)
 {
    return malloc(size);
@@ -98,7 +100,7 @@ void osal_free(void *ptr)
 {
    free(ptr);
 }
-
+#endif
 int osal_thread_create(void *thandle, int stacksize, void *func, void *param)
 {
    int                  ret;

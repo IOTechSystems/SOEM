@@ -112,7 +112,10 @@ int ecx_outframe(ecx_portt *port, int idx, int sock);
 int ecx_outframe_red(ecx_portt *port, int idx);
 int ecx_waitinframe(ecx_portt *port, int idx, int timeout);
 int ecx_srconfirm(ecx_portt *port, int idx,int timeout);
-
+////
+int ecx_inframe(ecx_portt *port, int idx, int stacknumber);
+int ec_inframe(int idx, int stacknumber);
+////
 #ifdef __cplusplus
 }
 #endif
