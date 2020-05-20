@@ -80,7 +80,11 @@ ec_adaptert * oshw_find_adapters(void)
           {
              string_len = EC_MAXLEN_ADAPTERNAME - 1;
           }
+#ifdef DECLARATION_CHANGES
+          memcpy(adapter->name, ids[i].if_name, string_len);
+#else
           strncpy(adapter->name, ids[i].if_name,string_len);
+#endif
           adapter->name[string_len] = '\0';
           strncpy(adapter->desc, ids[i].if_name,string_len);
           adapter->desc[string_len] = '\0';
