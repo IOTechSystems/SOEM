@@ -30,7 +30,7 @@ int ec_config_overlap(uint8 usetable, void *pIOmap);
 int ec_recover_slave(uint16 slave, int timeout);
 int ec_reconfig_slave(uint16 slave, int timeout);
 
-#ifdef DECLARATION_CHANGES
+#ifdef XRT_CHANGES
 int ec_findconfig( uint32 man, uint32 id);
 void ecx_init_context(ecx_contextt *context);
 int ecx_detect_slaves(ecx_contextt *context);

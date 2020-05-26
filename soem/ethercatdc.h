@@ -17,7 +17,7 @@ extern "C"
 #endif
 
 #ifdef EC_VER1
-#ifdef DECLARATION_CHANGES
+#ifdef XRT_CHANGES
 boolean ec_configdc(void);
 #else
 boolean ec_configdc();

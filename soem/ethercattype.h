@@ -292,7 +292,8 @@ enum
    /** SII category SM */
    ECT_SII_SM          = 41,
    /** SII category PDO */
-   ECT_SII_PDO         = 50
+   ECT_SII_PDO         = 50,
+   /** SII catergory serial*/
 };
 
 /** Item offsets in SII general section */
@@ -306,7 +307,10 @@ enum
    ECT_SII_MBXSIZE     = 0x0019,
    ECT_SII_TXMBXADR    = 0x001a,
    ECT_SII_RXMBXADR    = 0x0018,
-   ECT_SII_MBXPROTO    = 0x001c
+   ECT_SII_MBXPROTO    = 0x001c,
+#ifdef XRT_CHANGES
+   ECT_SII_SN          = 0x000e
+#endif
 };
 
 /** Mailbox types definitions */
