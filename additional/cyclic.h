@@ -19,13 +19,9 @@
 
 #define NSEC_PER_SEC 1000000000
 
-
-int64 gl_delta;
-
 void initialise_cyclic_variables(void);
 void sleep_cycle_with_offset(int64_t cycletime);
 void sleep_cycle(int64_t sleep);
 void calc_offset(int64_t cycletime);
-
 
 #endif

@@ -16,7 +16,6 @@ static void ec_sync(int64 reftime, int64 cycletime , int64 *offsettime)
   if(delta>0){ integral++; }
   if(delta<0){ integral--; }
   *offsettime = -(delta / 100) - (integral / 20);
-  gl_delta = delta;
 }
 
 static void add_timespec(struct timespec *ts_, int64 addtime)
