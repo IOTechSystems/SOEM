@@ -16,6 +16,8 @@ extern "C"
 {
 #endif
 
+#define XRT_CHANGES
+
 #define EC_NODEOFFSET      0x1000
 #define EC_TEMPNODE        0xffff
 

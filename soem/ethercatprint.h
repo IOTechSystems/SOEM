@@ -16,6 +16,8 @@ extern "C"
 {
 #endif
 
+#define XRT_CHANGES
+
 #ifdef XRT_CHANGES
 const char* ec_sdoerror2string( uint32 sdoerrorcode);
 #else

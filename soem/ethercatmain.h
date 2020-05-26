@@ -17,6 +17,8 @@ extern "C"
 {
 #endif
 
+#define XRT_CHANGES
+
 /** max. entries in EtherCAT error list */
 #define EC_MAXELIST       64
 /** max. length of readable name in slavelist and Object Description List */

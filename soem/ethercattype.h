@@ -23,6 +23,8 @@ extern "C"
 {
 #endif
 
+#define XRT_CHANGES
+
 #include "osal.h"
 
 /** define EC_VER1 if version 1 default context and functions are needed

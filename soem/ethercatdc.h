@@ -16,6 +16,8 @@ extern "C"
 {
 #endif
 
+#define XRT_CHANGES
+
 #ifdef EC_VER1
 #ifdef XRT_CHANGES
 boolean ec_configdc(void);

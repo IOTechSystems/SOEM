@@ -16,6 +16,8 @@ extern "C"
 {
 #endif
 
+#define XRT_CHANGES
+
 #define EC_SOE_DATASTATE_B   0x01
 #define EC_SOE_NAME_B        0x02
 #define EC_SOE_ATTRIBUTE_B   0x04

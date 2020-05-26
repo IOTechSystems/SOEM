@@ -22,6 +22,7 @@
 #include "ethercatsoe.h"
 #include "ethercatconfig.h"
 
+#define XRT_CHANGES
 
 typedef struct
 {

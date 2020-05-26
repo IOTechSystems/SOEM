@@ -16,6 +16,8 @@ extern "C"
 {
 #endif
 
+#define XRT_CHANGES
+
 /** max entries in Object Description list */
 #define EC_MAXODLIST   1024
 
