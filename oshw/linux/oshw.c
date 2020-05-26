@@ -12,7 +12,7 @@
 #include <string.h>
 #include "oshw.h"
 
-#define XRT_CHANGES
+#define STACK_CHANGES
 
 /**
  * Host to Network byte order (i.e. to big endian).
@@ -82,7 +82,7 @@ ec_adaptert * oshw_find_adapters(void)
           {
              string_len = EC_MAXLEN_ADAPTERNAME - 1;
           }
-#ifdef XRT_CHANGES
+#ifdef STACK_CHANGES
           memcpy(adapter->name, ids[i].if_name, string_len);
 #else
           strncpy(adapter->name, ids[i].if_name,string_len);

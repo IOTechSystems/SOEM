@@ -23,7 +23,7 @@ extern "C"
 {
 #endif
 
-#define XRT_CHANGES
+#define STACK_CHANGES
 
 #include "osal.h"
 
@@ -310,7 +310,7 @@ enum
    ECT_SII_TXMBXADR    = 0x001a,
    ECT_SII_RXMBXADR    = 0x0018,
    ECT_SII_MBXPROTO    = 0x001c,
-#ifdef XRT_CHANGES
+#ifdef STACK_CHANGES
    ECT_SII_SN          = 0x000e
 #endif
 };

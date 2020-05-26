@@ -16,7 +16,7 @@ extern "C"
 {
 #endif
 
-#define XRT_CHANGES
+#define STACK_CHANGES
 
 /** max entries in Object Description list */
 #define EC_MAXODLIST   1024
@@ -75,7 +75,7 @@ int ec_readODdescription(uint16 Item, ec_ODlistt *pODlist);
 int ec_readOEsingle(uint16 Item, uint8 SubI, ec_ODlistt *pODlist, ec_OElistt *pOElist);
 int ec_readOE(uint16 Item, ec_ODlistt *pODlist, ec_OElistt *pOElist);
 
-#ifdef XRT_CHANGES
+#ifdef STACK_CHANGES
 int ec_readPDOassign(uint16 Slave, uint16 PDOassign);
 int ecx_readPDOassign(ecx_contextt *context, uint16 Slave, uint16 PDOassign);
 int ec_readPDOassignCA(uint16 Slave, uint16 PDOassign, int Thread_n);

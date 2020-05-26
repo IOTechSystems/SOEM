@@ -16,10 +16,10 @@ extern "C"
 {
 #endif
 
-#define XRT_CHANGES
+#define STACK_CHANGES
 
 #ifdef EC_VER1
-#ifdef XRT_CHANGES
+#ifdef STACK_CHANGES
 boolean ec_configdc(void);
 #else
 boolean ec_configdc();

@@ -16,7 +16,7 @@ extern "C"
 {
 #endif
 
-#define XRT_CHANGES
+#define STACK_CHANGES
 
 #define EC_NODEOFFSET      0x1000
 #define EC_TEMPNODE        0xffff
@@ -32,7 +32,7 @@ int ec_config_overlap(uint8 usetable, void *pIOmap);
 int ec_recover_slave(uint16 slave, int timeout);
 int ec_reconfig_slave(uint16 slave, int timeout);
 
-#ifdef XRT_CHANGES
+#ifdef STACK_CHANGES
 int ec_findconfig( uint32 man, uint32 id);
 void ecx_init_context(ecx_contextt *context);
 int ecx_detect_slaves(ecx_contextt *context);

@@ -11,9 +11,9 @@
 #include <osal.h>
 
 #define USECS_PER_SEC     1000000
-#define XRT_CHANGES
+#define STACK_CHANGES
 
-#ifdef XRT_CHANGES
+#ifdef STACK_CHANGES
 static int osal_gettimeofday(struct timeval *tv, struct timezone *tz);
 #endif
 
@@ -25,7 +25,7 @@ int osal_usleep (uint32 usec)
    /* usleep is deprecated, use nanosleep instead */
    return nanosleep(&ts, NULL);
 }
-#ifdef XRT_CHANGES
+#ifdef STACK_CHANGES
 static int osal_gettimeofday(struct timeval *tv, struct timezone *tz)
 {
    struct timespec ts;
@@ -110,7 +110,7 @@ boolean osal_timer_is_expired (osal_timert * self)
 
    return is_not_yet_expired == FALSE;
 }
-#ifndef XRT_CHANGES
+#ifndef STACK_CHANGES
 void *osal_malloc(size_t size)
 {
    return malloc(size);

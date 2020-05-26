@@ -16,9 +16,9 @@ extern "C"
 {
 #endif
 
-#define XRT_CHANGES
+#define STACK_CHANGES
 
-#ifdef XRT_CHANGES
+#ifdef STACK_CHANGES
 const char* ec_sdoerror2string( uint32 sdoerrorcode);
 #else
 char* ec_sdoerror2string( uint32 sdoerrorcode);

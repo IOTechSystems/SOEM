@@ -14,7 +14,7 @@ extern "C"
 #include "osal_defs.h"
 #include <stdint.h>
 
-#define XRT_CHANGES
+#define STACK_CHANGES
 
 /* General types */
 #ifndef TRUE
