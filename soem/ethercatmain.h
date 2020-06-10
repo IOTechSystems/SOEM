@@ -17,6 +17,8 @@ extern "C"
 {
 #endif
 
+#define STACK_CHANGES
+
 /** max. entries in EtherCAT error list */
 #define EC_MAXELIST       64
 /** max. length of readable name in slavelist and Object Description List */
@@ -119,6 +121,10 @@ typedef struct ec_slave
    uint32           eep_id;
    /** revision from EEprom */
    uint32           eep_rev;
+#ifdef STACK_CHANGES
+   /** serial number */
+   uint32           eep_sn;
+#endif
    /** Interface type */
    uint16           Itype;
    /** Device type */
@@ -523,6 +529,14 @@ int ecx_send_processdata(ecx_contextt *context);
 int ecx_send_overlap_processdata(ecx_contextt *context);
 int ecx_receive_processdata(ecx_contextt *context, int timeout);
 int ecx_send_processdata_group(ecx_contextt *context, uint8 group);
+
+#ifdef STACK_CHANGES
+int ecx_FPRD_multi(ecx_contextt *context, int n, uint16 *configlst, ec_alstatust *slstatlst, int timeout);
+uint16 ecx_eeprom_waitnotbusyAP(ecx_contextt *context, uint16 aiadr,uint16 *estat, int timeout);
+uint16 ecx_eeprom_waitnotbusyFP(ecx_contextt *context, uint16 configadr,uint16 *estat, int timeout);
+uint16 ec_eeprom_waitnotbusyAP(uint16 aiadr,uint16 *estat, int timeout);
+uint16 ec_eeprom_waitnotbusyFP(uint16 configadr,uint16 *estat, int timeout);
+#endif
 
 #ifdef __cplusplus
 }

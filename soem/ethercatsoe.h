@@ -16,6 +16,8 @@ extern "C"
 {
 #endif
 
+#define STACK_CHANGES
+
 #define EC_SOE_DATASTATE_B   0x01
 #define EC_SOE_NAME_B        0x02
 #define EC_SOE_ATTRIBUTE_B   0x04
@@ -122,6 +124,10 @@ int ec_readIDNmap(uint16 slave, int *Osize, int *Isize);
 int ecx_SoEread(ecx_contextt *context, uint16 slave, uint8 driveNo, uint8 elementflags, uint16 idn, int *psize, void *p, int timeout);
 int ecx_SoEwrite(ecx_contextt *context, uint16 slave, uint8 driveNo, uint8 elementflags, uint16 idn, int psize, void *p, int timeout);
 int ecx_readIDNmap(ecx_contextt *context, uint16 slave, int *Osize, int *Isize);
+
+#ifdef STACK_CHANGES
+void ecx_SoEerror(ecx_contextt *context, uint16 Slave, uint16 idn, uint16 Error);
+#endif
 
 #ifdef __cplusplus
 }

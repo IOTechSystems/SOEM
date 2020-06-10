@@ -16,6 +16,7 @@
 #include "oshw.h"
 #include "ethercattype.h"
 #include "ethercatmain.h"
+#include "ethercatprint.h"
 
 #define EC_MAXERRORNAME 127
 

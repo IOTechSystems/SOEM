@@ -22,6 +22,7 @@
 #include "ethercatsoe.h"
 #include "ethercatconfig.h"
 
+#define STACK_CHANGES
 
 typedef struct
 {
@@ -364,6 +365,14 @@ int ecx_config_init(ecx_contextt *context, uint8 usetable)
          context->slavelist[slave].eep_id = etohl(eedat);
          ecx_readeeprom1(context, slave, ECT_SII_REV); /* revision */
       }
+#ifdef STACK_CHANGES
+     for (slave = 1; slave <= *(context->slavecount); slave++)
+     {
+       eedat = ecx_readeeprom2(context, slave, EC_TIMEOUTEEP); /* ID */
+       context->slavelist[slave].eep_sn = etohl(eedat);
+       ecx_readeeprom1(context, slave, ECT_SII_SN); /* serial number */
+     }
+#endif
       for (slave = 1; slave <= *(context->slavecount); slave++)
       {
          eedat = ecx_readeeprom2(context, slave, EC_TIMEOUTEEP); /* revision */

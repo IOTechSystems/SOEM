@@ -11,6 +11,11 @@
 #include <osal.h>
 
 #define USECS_PER_SEC     1000000
+#define STACK_CHANGES
+
+#ifdef STACK_CHANGES
+static int osal_gettimeofday(struct timeval *tv, struct timezone *tz);
+#endif
 
 int osal_usleep (uint32 usec)
 {
@@ -20,7 +25,23 @@ int osal_usleep (uint32 usec)
    /* usleep is deprecated, use nanosleep instead */
    return nanosleep(&ts, NULL);
 }
+#ifdef STACK_CHANGES
+static int osal_gettimeofday(struct timeval *tv, struct timezone *tz)
+{
+   struct timespec ts;
+   int return_value;
+   (void)tz;       /* Not used */
 
+   /* Use clock_gettime to prevent possible live-lock.
+    * Gettimeofday uses CLOCK_REALTIME that can get NTP timeadjust.
+    * If this function preempts timeadjust and it uses vpage it live-locks.
+    * Also when using XENOMAI, only clock_gettime is RT safe */
+   return_value = clock_gettime(CLOCK_MONOTONIC, &ts);
+   tv->tv_sec = ts.tv_sec;
+   tv->tv_usec = ts.tv_nsec / 1000;
+   return return_value;
+}
+#else
 int osal_gettimeofday(struct timeval *tv, struct timezone *tz)
 {
    struct timespec ts;
@@ -36,6 +57,7 @@ int osal_gettimeofday(struct timeval *tv, struct timezone *tz)
    tv->tv_usec = ts.tv_nsec / 1000;
    return return_value;
 }
+#endif
 
 ec_timet osal_current_time(void)
 {
@@ -88,7 +110,7 @@ boolean osal_timer_is_expired (osal_timert * self)
 
    return is_not_yet_expired == FALSE;
 }
-
+#ifndef STACK_CHANGES
 void *osal_malloc(size_t size)
 {
    return malloc(size);
@@ -98,7 +120,7 @@ void osal_free(void *ptr)
 {
    free(ptr);
 }
-
+#endif
 int osal_thread_create(void *thandle, int stacksize, void *func, void *param)
 {
    int                  ret;

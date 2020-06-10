@@ -14,6 +14,8 @@ extern "C"
 #include "osal_defs.h"
 #include <stdint.h>
 
+#define STACK_CHANGES
+
 /* General types */
 #ifndef TRUE
 #define TRUE                1

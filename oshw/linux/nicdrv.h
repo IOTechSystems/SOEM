@@ -17,6 +17,7 @@ extern "C"
 #endif
 
 #include <pthread.h>
+#define STACK_CHANGES
 
 /** pointer structure to Tx and Rx stacks */
 typedef struct
@@ -112,6 +113,11 @@ int ecx_outframe(ecx_portt *port, int idx, int sock);
 int ecx_outframe_red(ecx_portt *port, int idx);
 int ecx_waitinframe(ecx_portt *port, int idx, int timeout);
 int ecx_srconfirm(ecx_portt *port, int idx,int timeout);
+
+#ifdef STACK_CHANGES
+int ecx_inframe(ecx_portt *port, int idx, int stacknumber);
+int ec_inframe(int idx, int stacknumber);
+#endif
 
 #ifdef __cplusplus
 }
