@@ -52,24 +52,29 @@ endif()
 
 message("OS is ${OS}")
 
-file(GLOB SOEM_SOURCES soem/*.c)
-file(GLOB OSAL_SOURCES osal/${OS}/*.c)
-file(GLOB OSHW_SOURCES oshw/${OS}/*.c)
+file (GLOB SOEM_SOURCES soem/*.c)
+file (GLOB OSAL_SOURCES osal/${OS}/*.c)
+file (GLOB OSHW_SOURCES oshw/${OS}/*.c)
+file (GLOB ADDITIONAL_SOURCES additional/*.c)
 
-file(GLOB SOEM_HEADERS soem/*.h)
-file(GLOB OSAL_HEADERS osal/osal.h osal/${OS}/*.h)
-file(GLOB OSHW_HEADERS oshw/${OS}/*.h)
+file (GLOB SOEM_HEADERS soem/*.h)
+file (GLOB OSAL_HEADERS osal/osal.h osal/${OS}/*.h)
+file (GLOB OSHW_HEADERS oshw/${OS}/*.h)
+file (GLOB ADDITIONAL_HEADERS additional/*.h)
 
-include_directories(soem)
-include_directories(osal)
-include_directories(osal/${OS})
-include_directories(oshw/${OS})
+include_directories (soem)
+include_directories (osal)
+include_directories (osal/${OS})
+include_directories (oshw/${OS})
+include_directories (additional)
 
 add_library(soem STATIC
   ${SOEM_SOURCES}
   ${OSAL_SOURCES}
   ${OSHW_SOURCES}
+  ${ADDITIONAL_SOURCES}
   ${OSHW_EXTRA_SOURCES})
+
 target_link_libraries(soem ${OS_LIBS})
 
 message("LIB_DIR: ${SOEM_LIB_INSTALL_DIR}")
@@ -79,6 +84,7 @@ install(FILES
   ${SOEM_HEADERS}
   ${OSAL_HEADERS}
   ${OSHW_HEADERS}
+  ${ADDITIONAL_HEADERS}
   DESTINATION ${SOEM_INCLUDE_INSTALL_DIR})
 
 if(BUILD_TESTS) 
