@@ -7,8 +7,13 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install)
 endif()
 
-set(SOEM_INCLUDE_INSTALL_DIR include/soem)
-set(SOEM_LIB_INSTALL_DIR lib)
+if (NOT SOEM_INCLUDE_INSTALL_DIR)
+  set(SOEM_INCLUDE_INSTALL_DIR include/soem)
+endif ()
+
+if (NOT SOEM_LIB_INSTALL_DIR)
+  set(SOEM_LIB_INSTALL_DIR lib)
+endif ()
 
 if(WIN32)
   set(OS "win32")
