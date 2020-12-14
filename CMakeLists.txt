@@ -69,8 +69,6 @@ include_directories (osal/${OS})
 include_directories (oshw/${OS})
 include_directories (additional)
 
-message ("LIB_DIR: ${SOEM_LIB_INSTALL_DIR}")
-
 add_library (soem SHARED ${SOURCES})
 target_link_libraries (soem PUBLIC ${OS_LIBS})
 set_target_properties (soem PROPERTIES OUTPUT_NAME soem CLEAN_DIRECT_OUTPUT 1 POSITION_INDEPENDENT_CODE ON)
