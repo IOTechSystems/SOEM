@@ -55,11 +55,13 @@ file (GLOB SOEM_SOURCES soem/*.c)
 file (GLOB OSAL_SOURCES osal/${OS}/*.c)
 file (GLOB OSHW_SOURCES oshw/${OS}/*.c)
 file (GLOB ADDITIONAL_SOURCES additional/*.c)
+set (SOURCES ${SOEM_SOURCES} ${OSAL_SOURCES} ${OSHW_SOURCES} ${ADDITIONAL_SOURCES})
 
 file (GLOB SOEM_HEADERS soem/*.h)
 file (GLOB OSAL_HEADERS osal/osal.h osal/${OS}/*.h)
 file (GLOB OSHW_HEADERS oshw/${OS}/*.h)
 file (GLOB ADDITIONAL_HEADERS additional/*.h)
+set (HEADERS ${SOEM_HEADERS} ${OSAL_HEADERS} ${OSHW_HEADERS} ${ADDITIONAL_HEADERS})
 
 include_directories (soem)
 include_directories (osal)
@@ -69,12 +71,12 @@ include_directories (additional)
 
 message ("LIB_DIR: ${SOEM_LIB_INSTALL_DIR}")
 
-add_library (soem SHARED ${SOEM_SOURCES} ${OSAL_SOURCES} ${OSHW_SOURCES} ${ADDITIONAL_SOURCES} ${OSHW_EXTRA_SOURCES})
-target_link_libraries (soem ${OS_LIBS})
+add_library (soem SHARED ${SOURCES})
+target_link_libraries (soem PUBLIC ${OS_LIBS})
 set_target_properties (soem PROPERTIES OUTPUT_NAME soem CLEAN_DIRECT_OUTPUT 1 POSITION_INDEPENDENT_CODE ON)
 install(TARGETS soem DESTINATION ${SOEM_LIB_INSTALL_DIR})
 
-add_library (soem-static STATIC ${SOEM_SOURCES} ${OSAL_SOURCES} ${OSHW_SOURCES} ${ADDITIONAL_SOURCES} ${OSHW_EXTRA_SOURCES})
+add_library (soem-static STATIC ${SOURCES})
 set_target_properties (soem-static PROPERTIES OUTPUT_NAME soem CLEAN_DIRECT_OUTPUT 1)
 install(TARGETS soem-static DESTINATION ${SOEM_LIB_INSTALL_DIR})
 
