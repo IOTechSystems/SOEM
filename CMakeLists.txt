@@ -9,7 +9,6 @@ endif()
 
 set(SOEM_INCLUDE_INSTALL_DIR include/soem)
 set(SOEM_LIB_INSTALL_DIR lib)
-set(BUILD_TESTS TRUE)
 
 if(WIN32)
   set(OS "win32")
@@ -73,13 +72,11 @@ message ("LIB_DIR: ${SOEM_LIB_INSTALL_DIR}")
 add_library (soem SHARED ${SOEM_SOURCES} ${OSAL_SOURCES} ${OSHW_SOURCES} ${ADDITIONAL_SOURCES} ${OSHW_EXTRA_SOURCES})
 target_link_libraries (soem ${OS_LIBS})
 set_target_properties (soem PROPERTIES OUTPUT_NAME soem CLEAN_DIRECT_OUTPUT 1 POSITION_INDEPENDENT_CODE ON)
-target_include_directories (soem PUBLIC ${SOEM_HEADERS} ${OSAL_HEADERS} ${OSHW_HEADERS} ${ADDITIONAL_HEADERS})
+install(TARGETS soem DESTINATION ${SOEM_LIB_INSTALL_DIR})
 
 add_library (soem-static STATIC ${SOEM_SOURCES} ${OSAL_SOURCES} ${OSHW_SOURCES} ${ADDITIONAL_SOURCES} ${OSHW_EXTRA_SOURCES})
 set_target_properties (soem-static PROPERTIES OUTPUT_NAME soem CLEAN_DIRECT_OUTPUT 1)
-target_include_directories (soem-static PUBLIC ${SOEM_HEADERS} ${OSAL_HEADERS} ${OSHW_HEADERS} ${ADDITIONAL_HEADERS})
-
-install(TARGETS soem soem-static  DESTINATION ${SOEM_LIB_INSTALL_DIR})
+install(TARGETS soem-static DESTINATION ${SOEM_LIB_INSTALL_DIR})
 
 install(FILES
   ${SOEM_HEADERS}
