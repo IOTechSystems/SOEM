@@ -79,10 +79,6 @@ target_link_libraries (soem PUBLIC ${OS_LIBS})
 set_target_properties (soem PROPERTIES OUTPUT_NAME soem CLEAN_DIRECT_OUTPUT 1 POSITION_INDEPENDENT_CODE ON)
 install(TARGETS soem DESTINATION ${SOEM_LIB_INSTALL_DIR})
 
-add_library (soem-static STATIC ${SOURCES})
-set_target_properties (soem-static PROPERTIES OUTPUT_NAME soem CLEAN_DIRECT_OUTPUT 1)
-install(TARGETS soem-static DESTINATION ${SOEM_LIB_INSTALL_DIR})
-
 install(FILES
   ${SOEM_HEADERS}
   ${OSAL_HEADERS}
