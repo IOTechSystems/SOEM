@@ -15,6 +15,8 @@ if (NOT SOEM_LIB_INSTALL_DIR)
   set(SOEM_LIB_INSTALL_DIR lib)
 endif ()
 
+message(${CMAKE_SYSTEM_NAME})
+
 if(WIN32)
   set(OS "win32")
   include_directories(oshw/win32/wpcap/Include)
