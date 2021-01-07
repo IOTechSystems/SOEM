@@ -7,9 +7,13 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install)
 endif()
 
-set(SOEM_INCLUDE_INSTALL_DIR include/soem)
-set(SOEM_LIB_INSTALL_DIR lib)
-set(BUILD_TESTS TRUE)
+if (NOT SOEM_INCLUDE_INSTALL_DIR)
+  set(SOEM_INCLUDE_INSTALL_DIR include/soem)
+endif ()
+
+if (NOT SOEM_LIB_INSTALL_DIR)
+  set(SOEM_LIB_INSTALL_DIR lib)
+endif ()
 
 if(WIN32)
   set(OS "win32")
@@ -22,7 +26,7 @@ if(WIN32)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /D _CRT_SECURE_NO_WARNINGS")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  /WX")
   set(OS_LIBS wpcap.lib Packet.lib Ws2_32.lib Winmm.lib)
-elseif(UNIX AND NOT APPLE)
+elseif(GENERIC OR (UNIX AND NOT APPLE))
   set(OS "linux")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
   set(OS_LIBS pthread rt)
@@ -52,33 +56,34 @@ endif()
 
 message("OS is ${OS}")
 
-file(GLOB SOEM_SOURCES soem/*.c)
-file(GLOB OSAL_SOURCES osal/${OS}/*.c)
-file(GLOB OSHW_SOURCES oshw/${OS}/*.c)
+file (GLOB SOEM_SOURCES soem/*.c)
+file (GLOB OSAL_SOURCES osal/${OS}/*.c)
+file (GLOB OSHW_SOURCES oshw/${OS}/*.c)
+file (GLOB ADDITIONAL_SOURCES additional/*.c)
+set (SOURCES ${SOEM_SOURCES} ${OSAL_SOURCES} ${OSHW_SOURCES} ${ADDITIONAL_SOURCES})
 
-file(GLOB SOEM_HEADERS soem/*.h)
-file(GLOB OSAL_HEADERS osal/osal.h osal/${OS}/*.h)
-file(GLOB OSHW_HEADERS oshw/${OS}/*.h)
+file (GLOB SOEM_HEADERS soem/*.h)
+file (GLOB OSAL_HEADERS osal/osal.h osal/${OS}/*.h)
+file (GLOB OSHW_HEADERS oshw/${OS}/*.h)
+file (GLOB ADDITIONAL_HEADERS additional/*.h)
+set (HEADERS ${SOEM_HEADERS} ${OSAL_HEADERS} ${OSHW_HEADERS} ${ADDITIONAL_HEADERS})
 
-include_directories(soem)
-include_directories(osal)
-include_directories(osal/${OS})
-include_directories(oshw/${OS})
+include_directories (soem)
+include_directories (osal)
+include_directories (osal/${OS})
+include_directories (oshw/${OS})
+include_directories (additional)
 
-add_library(soem STATIC
-  ${SOEM_SOURCES}
-  ${OSAL_SOURCES}
-  ${OSHW_SOURCES}
-  ${OSHW_EXTRA_SOURCES})
-target_link_libraries(soem ${OS_LIBS})
-
-message("LIB_DIR: ${SOEM_LIB_INSTALL_DIR}")
-
+add_library (soem ${SOURCES})
+target_link_libraries (soem PUBLIC ${OS_LIBS})
+set_target_properties (soem PROPERTIES OUTPUT_NAME soem CLEAN_DIRECT_OUTPUT 1 POSITION_INDEPENDENT_CODE ON)
 install(TARGETS soem DESTINATION ${SOEM_LIB_INSTALL_DIR})
+
 install(FILES
   ${SOEM_HEADERS}
   ${OSAL_HEADERS}
   ${OSHW_HEADERS}
+  ${ADDITIONAL_HEADERS}
   DESTINATION ${SOEM_INCLUDE_INSTALL_DIR})
 
 if(BUILD_TESTS) 
