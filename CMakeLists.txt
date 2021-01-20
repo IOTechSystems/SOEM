@@ -1,6 +1,16 @@
-cmake_minimum_required(VERSION 2.8.4)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 project(SOEM C)
+
+if ("${LINUX_SYS}" STREQUAL "AzureSphere")
+  cmake_minimum_required (VERSION 3.10)
+  azsphere_configure_tools (TOOLS_REVISION "20.11")
+  azsphere_configure_api (TARGET_API_SET "${AZURE_SPHERE_TARGET_API_SET}")
+  set (AZURESPHERE_API "${AZURE_SPHERE_TARGET_API_SET}")
+  set (AZURESPHERE_SDK_DIR /opt/azurespheresdk/Sysroots/${AZURESPHERE_API})
+else ()
+  cmake_minimum_required(VERSION 2.8.4)
+endif ()
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   # Default to installing in SOEM source directory
@@ -28,8 +38,11 @@ if(WIN32)
   set(OS_LIBS wpcap.lib Packet.lib Ws2_32.lib Winmm.lib)
 elseif(GENERIC OR (UNIX AND NOT APPLE))
   set(OS "linux")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
   set(OS_LIBS pthread rt)
+elseif("${LINUX_SYS}" STREQUAL "AzureSphere")
+  set(OS "linux")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -DAZURESPHERE -D_GNU_SOURCE")
 elseif(APPLE)
   # This must come *before* linux or MacOSX will identify as Unix.
   set(OS "macosx")
