@@ -6,6 +6,10 @@
 #ifndef _osal_defs_
 #define _osal_defs_
 
+#ifdef AZURESPHERE
+#include <sys/time.h>
+#endif
+
 #ifdef __cplusplus
 extern "C"
 {

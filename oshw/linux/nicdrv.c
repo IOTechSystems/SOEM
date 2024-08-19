@@ -93,7 +93,7 @@ int ecx_setupnic(ecx_portt *port, const char *ifname, int secondary)
    int r, rval, ifindex;
    struct timeval timeout;
    struct ifreq ifr;
-   struct sockaddr_ll sll;
+   struct sockaddr_ll sll = { 0 };
    int *psock;
    pthread_mutexattr_t mutexattr;
 
@@ -152,16 +152,24 @@ int ecx_setupnic(ecx_portt *port, const char *ifname, int secondary)
    i = 1;
    r = setsockopt(*psock, SOL_SOCKET, SO_DONTROUTE, &i, sizeof(i));
    /* connect socket to NIC by name */
+#ifdef AZURESPHERE
+   ifindex = (int) if_nametoindex (ifname);
+#else
    strcpy(ifr.ifr_name, ifname);
    r = ioctl(*psock, SIOCGIFINDEX, &ifr);
    ifindex = ifr.ifr_ifindex;
+#endif
    strcpy(ifr.ifr_name, ifname);
    ifr.ifr_flags = 0;
    /* reset flags of NIC interface */
+#ifdef AZURESPHERE
+   /* FIXME: No current way of setting flags on AzureSphere. Issue with Microsoft. */
+#else
    r = ioctl(*psock, SIOCGIFFLAGS, &ifr);
    /* set flags of NIC interface, here promiscuous and broadcast */
    ifr.ifr_flags = ifr.ifr_flags | IFF_PROMISC | IFF_BROADCAST;
    r = ioctl(*psock, SIOCSIFFLAGS, &ifr);
+#endif
    /* bind socket to protocol, in this case RAW EtherCAT */
    sll.sll_family = AF_PACKET;
    sll.sll_ifindex = ifindex;
@@ -186,7 +194,12 @@ int ecx_setupnic(ecx_portt *port, const char *ifname, int secondary)
 int ecx_closenic(ecx_portt *port)
 {
    if (port->sockhandle >= 0)
+   {
+      pthread_mutex_destroy(&(port->getindex_mutex));
+      pthread_mutex_destroy(&(port->tx_mutex));
+      pthread_mutex_destroy(&(port->rx_mutex));
       close(port->sockhandle);
+   }
    if ((port->redport) && (port->redport->sockhandle >= 0))
       close(port->redport->sockhandle);
 
